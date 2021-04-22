@@ -3,6 +3,9 @@
     public interface IMove
     {
         float Speed { get; }
-        void Move(float horizontal, float vertical, float deltaTime);
+        void MoveUp();
+        void MoveDown();
+        void MoveLeft();
+        void MoveRight();
     }
 }

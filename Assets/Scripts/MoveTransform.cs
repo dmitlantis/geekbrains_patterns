@@ -5,21 +5,37 @@ namespace Asteroids
     internal class MoveTransform : IMove
     {
         private readonly Transform _transform;
-        private Vector3 _move;
+        private readonly Rigidbody2D _rigidBody;
 
         public float Speed { get; protected set; }
         
-        public MoveTransform(Transform transform, float speed)
+        public MoveTransform(Transform transform, float speed, Rigidbody2D rigidBody)
         {
             _transform = transform;
             Speed = speed;
+            _rigidBody = rigidBody;
+        }
+        
+        public void MoveUp()
+        {
+            Move(_transform.up);
+        }
+        public void MoveDown()
+        {
+            Move(-_transform.up);
+        }
+        public void MoveLeft()
+        {
+            Move(-_transform.right);
+        }
+        public void MoveRight()
+        {
+            Move(_transform.right);
         }
 
-        public void Move(float horizontal, float vertical,  float deltaTime)
+        public void Move(Vector2 way)
         {
-            var speed = deltaTime * Speed;
-            _move.Set(horizontal * speed, vertical * speed, 0.0f);
-            _transform.localPosition += _move;
+           _rigidBody.AddForce(way * Speed, ForceMode2D.Impulse);
         }
     }
 }
